@@ -27,5 +27,6 @@
     { "id": 5, "brand": "Cupra", "address": "Avenida de la concordia 142, Sabadell, 08331", "phone": "+34 93 567 89 01", "hours": "Lun-Sáb 9:00-19:00" },
     { "id": 6, "brand": "BMW", "address": "Avenida del Valles 167, Sant Cugat del Valles, 08225", "phone": "+34 93 678 90 12", "hours": "Lun-Sáb 9:00-19:00" },
     { "id": 7, "brand": "Exotic Cars", "address": "Avenida Felipe VI, Sant Cugat del Valles, 08235", "phone": "+34 93 789 01 23", "hours": "Lun-Vie 10:00-18:00" }
-  ]
+  ],
+  "messages": []
 }

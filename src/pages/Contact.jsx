@@ -11,12 +11,27 @@ export default function Contact() {
     formState: { errors, isSubmitting },
   } = useForm();
 
+  const [error, setError] = useState(null);
+
   const onSubmit = async (data) => {
-    await new Promise((r) => setTimeout(r, 800));
-    console.log('Formulario enviado:', data);
-    setSubmitted(true);
-    reset();
-    setTimeout(() => setSubmitted(false), 4000);
+    setError(null);
+    try {
+      const res = await fetch('http://localhost:3001/messages', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          ...data,
+          source: 'contacto',
+          createdAt: new Date().toISOString(),
+        }),
+      });
+      if (!res.ok) throw new Error('No se pudo enviar el mensaje');
+      setSubmitted(true);
+      reset();
+      setTimeout(() => setSubmitted(false), 4000);
+    } catch {
+      setError('No se pudo enviar el mensaje. Inténtalo de nuevo más tarde.');
+    }
   };
 
   return (
@@ -125,6 +140,8 @@ export default function Contact() {
                   ✓ Mensaje enviado correctamente. Te contactaremos pronto.
                 </div>
               )}
+
+              {error && <span className="form-error">{error}</span>}
             </form>
           </div>
         </div>

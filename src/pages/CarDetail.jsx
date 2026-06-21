@@ -22,6 +22,7 @@ export default function CarDetail() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [sent, setSent] = useState(false);
+  const [formError, setFormError] = useState(null);
 
   const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm();
 
@@ -47,9 +48,24 @@ export default function CarDetail() {
   }, [id]);
 
   const onSubmit = async (data) => {
-    await new Promise((r) => setTimeout(r, 700));
-    console.log('Consulta enviada:', data);
-    setSent(true);
+    setFormError(null);
+    try {
+      const res = await fetch('http://localhost:3001/messages', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          ...data,
+          source: 'ficha-vehiculo',
+          carId: car.id,
+          car: `${car.brand} ${car.model}`,
+          createdAt: new Date().toISOString(),
+        }),
+      });
+      if (!res.ok) throw new Error('No se pudo enviar la consulta');
+      setSent(true);
+    } catch {
+      setFormError('No se pudo enviar la consulta. Inténtalo de nuevo más tarde.');
+    }
   };
 
   if (loading) {
@@ -228,6 +244,8 @@ export default function CarDetail() {
                   >
                     {isSubmitting ? 'Enviando...' : 'Enviar'}
                   </button>
+
+                  {formError && <span className="form-error">{formError}</span>}
                 </form>
               )}
             </div>

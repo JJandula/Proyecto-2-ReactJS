@@ -58,7 +58,7 @@ El proyecto incluye un dataset de **18 vehículos de 6 marcas** (Porsche, BMW, M
 | 🔗 **Filtrado por URL**               | Al pulsar una marca en la Home se navega a `/catalogo?marca=BMW`, abriendo el catálogo ya filtrado por esa marca.               |
 | 🚗 **Ficha de vehículo**              | Página de detalle con imagen en alta resolución, especificaciones, precio y formulario de contacto integrado.                   |
 | ❤️ **Favoritos globales**             | Añade o elimina vehículos de favoritos desde cualquier punto de la app; un panel lateral deslizante muestra la selección.       |
-| ✉️ **Formularios validados**          | Formularios de contacto con validación en tiempo real mediante `react-hook-form` (campos obligatorios, formato de email, etc.). |
+| ✉️ **Formularios validados y persistentes** | Formularios de contacto con validación mediante `react-hook-form` que **guardan el mensaje en la API** (`POST /messages`), con feedback de éxito y de error. |
 | 📱 **Diseño responsive**              | Layout _mobile-first_ que adapta el grid de 3 → 2 → 1 columnas según el dispositivo.                                            |
 | 🧭 **Navegación SPA**                 | Enrutamiento del lado del cliente con `react-router-dom`, incluyendo página 404 personalizada.                                  |
 
@@ -200,9 +200,11 @@ La API REST es generada automáticamente por `json-server` a partir de `db.json`
 GET    /cars          # Lista todos los vehículos
 GET    /cars/:id      # Obtiene un vehículo por su ID
 GET    /dealers       # Lista todos los concesionarios
+GET    /messages      # Lista los mensajes enviados desde los formularios
+POST   /messages      # Crea un mensaje (usado por los formularios de contacto)
 ```
 
-> `json-server` también expone `POST`, `PUT`, `PATCH` y `DELETE` sobre estos recursos, aunque la aplicación solo consume los endpoints `GET`.
+> `json-server` también expone `PUT`, `PATCH` y `DELETE` sobre estos recursos. La aplicación consume `GET` para los catálogos y `POST /messages` al enviar un formulario.
 
 #### Ejemplo de petición
 
@@ -249,6 +251,21 @@ curl http://localhost:3001/cars/1
 | `address` | `string` | `"Calle Meridional 12, Sant Cugat del Vallès, 08232"` |
 | `phone`   | `string` | `"+34 93 123 45 67"`                                  |
 | `hours`   | `string` | `"Lun-Sáb 9:00-19:00"`                                |
+
+**Mensaje (`message`)** — generado al enviar un formulario
+
+| Campo       | Tipo     | Ejemplo                          | Notas                                          |
+| ----------- | -------- | -------------------------------- | ---------------------------------------------- |
+| `id`        | `number` | `1`                              | Autogenerado por `json-server`                 |
+| `nombre`    | `string` | `"Juan"`                         |                                                |
+| `apellido`  | `string` | `"Pérez"`                        | Solo en el formulario de la ficha de vehículo  |
+| `email`     | `string` | `"juan@email.com"`               |                                                |
+| `telefono`  | `string` | `"666000000"`                    | Opcional                                       |
+| `mensaje`   | `string` | `"Estoy interesado en el…"`      |                                                |
+| `source`    | `string` | `"contacto"` / `"ficha-vehiculo"`| Origen del mensaje                             |
+| `carId`     | `number` | `1`                              | Solo si proviene de una ficha de vehículo      |
+| `car`       | `string` | `"Porsche 911 GT3 RS"`           | Solo si proviene de una ficha de vehículo      |
+| `createdAt` | `string` | `"2026-06-21T10:30:00.000Z"`     | Fecha de envío (ISO 8601)                      |
 
 ### Consumir el catálogo desde un componente
 
@@ -343,7 +360,23 @@ npm run lint
 3. Verifica los filtros (marca, tipo, precio, kilómetros) y la ordenación.
 4. Pulsa una marca en la Home y confirma que el catálogo se abre filtrado por esa marca.
 5. Añade y elimina favoritos; comprueba que el panel lateral se actualiza.
-6. Envía el formulario de contacto con campos vacíos y verifica los mensajes de validación.
+6. Envía un formulario con campos vacíos y verifica los mensajes de validación.
+
+### Verificar que los formularios guardan los datos
+
+Los formularios de `/contacto` y de la ficha de vehículo (`/catalogo/:id`) envían los datos a la API (`POST /messages`). Para comprobar que **se guardan de verdad**:
+
+1. Con el entorno corriendo (`npm run dev:all`), rellena y envía cualquiera de los dos formularios. Deberías ver el mensaje de éxito.
+2. Abre en el navegador **[http://localhost:3001/messages](http://localhost:3001/messages)** — verás el mensaje recién creado en formato JSON.
+3. Alternativamente, consúltalo por terminal:
+   ```bash
+   curl http://localhost:3001/messages
+   ```
+4. Los mensajes también quedan **persistidos en el archivo `db.json`** (bajo la clave `messages`).
+
+> 💡 Para probar el manejo de errores, detén la API (deja solo `npm run dev`) y envía un formulario: aparecerá un mensaje de error en rojo en lugar del de éxito.
+
+> 🧹 Antes de entregar el proyecto, puedes vaciar los mensajes de prueba dejando `"messages": []` en `db.json`.
 
 ### Propuesta a futuro
 
