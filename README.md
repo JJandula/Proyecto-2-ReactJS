@@ -391,6 +391,6 @@ Para incorporar testing automatizado se recomienda **[Vitest](https://vitest.dev
 
 ## 📄 Licencia
 
-Proyecto académico desarrollado para el **Máster en Full Stack Development — 2025**.
+Proyecto académico desarrollado para el **Máster en FullStack Development — 2026**.
 
 Distribuido con fines educativos. Las imágenes de los vehículos pertenecen a sus respectivas marcas.
