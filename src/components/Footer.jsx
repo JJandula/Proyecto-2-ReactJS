@@ -5,7 +5,7 @@ export default function Footer() {
         <div className="footer__logo">
           JJ <span>Motors</span>
         </div>
-        <p className="footer__copy">© 2025 JJ Motors. Todos los derechos reservados.</p>
+        <p className="footer__copy">© 2026 JJ Motors. Todos los derechos reservados.</p>
       </div>
     </footer>
   );
