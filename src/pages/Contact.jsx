@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { ENDPOINTS } from '../config/api';
 
 export default function Contact() {
   const [submitted, setSubmitted] = useState(false);
@@ -16,7 +17,7 @@ export default function Contact() {
   const onSubmit = async (data) => {
     setError(null);
     try {
-      const res = await fetch('http://localhost:3001/messages', {
+      const res = await fetch(ENDPOINTS.messages, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

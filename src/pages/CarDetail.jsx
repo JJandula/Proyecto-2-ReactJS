@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { useFavorites } from '../context/FavoritesContext';
+import { ENDPOINTS } from '../config/api';
 
 function formatPrice(price) {
   return new Intl.NumberFormat('es-ES', {
@@ -32,7 +33,7 @@ export default function CarDetail() {
     async function fetchCar() {
       try {
         setLoading(true);
-        const res = await fetch(`http://localhost:3001/cars/${id}`, { signal: controller.signal });
+        const res = await fetch(`${ENDPOINTS.cars}/${id}`, { signal: controller.signal });
         if (!res.ok) throw new Error('Coche no encontrado');
         const data = await res.json();
         setCar(data);
@@ -50,7 +51,7 @@ export default function CarDetail() {
   const onSubmit = async (data) => {
     setFormError(null);
     try {
-      const res = await fetch('http://localhost:3001/messages', {
+      const res = await fetch(ENDPOINTS.messages, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

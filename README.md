@@ -37,7 +37,7 @@ Un concesionario necesita un escaparate digital donde el cliente pueda encontrar
 
 - Una **experiencia de navegación fluida** (SPA, sin recargas de página).
 - Un **buscador y sistema de filtros avanzado** para acotar resultados en tiempo real.
-- Una **lista de favoritos persistente durante la sesión** para comparar opciones de un vistazo.
+- Una **lista de favoritos que persiste entre recargas** (vía `localStorage`) para comparar opciones de un vistazo.
 - **Canales de contacto** integrados en cada ficha de vehículo.
 
 ### Propuesta de valor
@@ -57,7 +57,7 @@ El proyecto incluye un dataset de **18 vehículos de 6 marcas** (Porsche, BMW, M
 | ↕️ **Ordenación**                     | Ordena los resultados por precio (ascendente/descendente) y por año (más reciente).                                             |
 | 🔗 **Filtrado por URL**               | Al pulsar una marca en la Home se navega a `/catalogo?marca=BMW`, abriendo el catálogo ya filtrado por esa marca.               |
 | 🚗 **Ficha de vehículo**              | Página de detalle con imagen en alta resolución, especificaciones, precio y formulario de contacto integrado.                   |
-| ❤️ **Favoritos globales**             | Añade o elimina vehículos de favoritos desde cualquier punto de la app; un panel lateral deslizante muestra la selección.       |
+| ❤️ **Favoritos globales y persistentes** | Añade o elimina vehículos desde cualquier punto de la app; se muestran en un panel lateral deslizante y **persisten entre recargas** vía `localStorage`. |
 | ✉️ **Formularios validados y persistentes** | Formularios de contacto con validación mediante `react-hook-form` que **guardan el mensaje en la API** (`POST /messages`), con feedback de éxito y de error. |
 | 📱 **Diseño responsive**              | Layout _mobile-first_ que adapta el grid de 3 → 2 → 1 columnas según el dispositivo.                                            |
 | 🧭 **Navegación SPA**                 | Enrutamiento del lado del cliente con `react-router-dom`, incluyendo página 404 personalizada.                                  |
@@ -106,8 +106,10 @@ jj-motors/
 │   │   ├── FilterBar.jsx         # Sidebar de filtros con acordeón
 │   │   ├── Footer.jsx            # Pie de página
 │   │   └── Navbar.jsx            # Barra de navegación (pill flotante)
+│   ├── config/
+│   │   └── api.js                # URL base y endpoints de la API (centralizado)
 │   ├── context/
-│   │   └── FavoritesContext.jsx  # Estado global de favoritos (Context API)
+│   │   └── FavoritesContext.jsx  # Estado global de favoritos (Context API + localStorage)
 │   ├── hooks/
 │   │   └── useCars.js            # Custom hook: fetch + filtrado de coches
 │   ├── pages/                    # Vistas asociadas a rutas
@@ -128,6 +130,7 @@ jj-motors/
 | ----------------- | ------------------------------------------------------------------------- |
 | `public/cars/`    | Las imágenes estáticas de los vehículos referenciadas en `db.json`.       |
 | `src/components/` | Piezas de UI reutilizables y sin lógica de enrutamiento.                  |
+| `src/config/`     | Configuración centralizada (URL base y endpoints de la API).             |
 | `src/context/`    | Estado compartido entre toda la app mediante la Context API.              |
 | `src/hooks/`      | Hooks personalizados que encapsulan lógica reutilizable (fetch, filtros). |
 | `src/pages/`      | Cada archivo es una vista mapeada a una ruta en `App.jsx`.                |
@@ -141,7 +144,12 @@ jj-motors/
 - **Node.js** `18` o superior
 - **npm** `9` o superior
 
-> 💡 No se requieren variables de entorno. La URL de la API está fijada a `http://localhost:3001` en `src/hooks/useCars.js`.
+> 💡 **Variables de entorno (opcional):** la URL base de la API se define en `src/config/api.js` y por defecto es `http://localhost:3001`. Para apuntar a otra URL, copia `.env.example` a `.env` y ajusta `VITE_API_URL`:
+>
+> ```bash
+> cp .env.example .env
+> # VITE_API_URL=http://localhost:3001
+> ```
 
 ### Instalación
 
@@ -359,7 +367,7 @@ npm run lint
 2. Comprueba que el catálogo carga los 18 vehículos desde la API.
 3. Verifica los filtros (marca, tipo, precio, kilómetros) y la ordenación.
 4. Pulsa una marca en la Home y confirma que el catálogo se abre filtrado por esa marca.
-5. Añade y elimina favoritos; comprueba que el panel lateral se actualiza.
+5. Añade y elimina favoritos; comprueba que el panel lateral se actualiza y que **se mantienen al recargar la página** (persistencia en `localStorage`).
 6. Envía un formulario con campos vacíos y verifica los mensajes de validación.
 
 ### Verificar que los formularios guardan los datos

@@ -1,10 +1,25 @@
-import { createContext, useContext, useState, useCallback } from 'react';
+import { createContext, useContext, useState, useCallback, useEffect } from 'react';
 
 const FavoritesContext = createContext(null);
 
+const STORAGE_KEY = 'jj-motors:favorites';
+
+function loadFavorites() {
+  try {
+    const stored = localStorage.getItem(STORAGE_KEY);
+    return stored ? JSON.parse(stored) : [];
+  } catch {
+    return [];
+  }
+}
+
 export function FavoritesProvider({ children }) {
-  const [favorites, setFavorites] = useState([]);
+  const [favorites, setFavorites] = useState(loadFavorites);
   const [isPanelOpen, setIsPanelOpen] = useState(false);
+
+  useEffect(() => {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(favorites));
+  }, [favorites]);
 
   const toggleFavorite = useCallback((car) => {
     setFavorites((prev) => {
@@ -34,6 +49,9 @@ export function FavoritesProvider({ children }) {
   );
 }
 
+// El hook vive junto a su Context por conveniencia; la regla react-refresh
+// solo afecta al hot-reload en desarrollo, no al funcionamiento de la app.
+// eslint-disable-next-line react-refresh/only-export-components
 export function useFavorites() {
   const ctx = useContext(FavoritesContext);
   if (!ctx) throw new Error('useFavorites must be used inside FavoritesProvider');

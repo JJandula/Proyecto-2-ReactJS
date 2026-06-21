@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
-
-const API_URL = 'http://localhost:3001/cars';
+import { ENDPOINTS } from '../config/api';
 
 export function useCars(filters = {}) {
   const [cars, setCars] = useState([]);
@@ -14,7 +13,7 @@ export function useCars(filters = {}) {
       try {
         setLoading(true);
         setError(null);
-        const res = await fetch(API_URL, { signal: controller.signal });
+        const res = await fetch(ENDPOINTS.cars, { signal: controller.signal });
         if (!res.ok) throw new Error('Error al cargar los coches');
         const data = await res.json();
         setCars(data);
