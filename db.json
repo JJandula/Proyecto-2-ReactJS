@@ -1,0 +1,31 @@
+{
+  "cars": [
+    { "id": 1, "model": "911 GT3 RS", "brand": "Porsche", "cv": 575, "year": 2025, "price": 400000, "km": 3000, "type": "Sport", "image": "/cars/porsche-911-gt3-rs.webp" },
+    { "id": 2, "model": "712 Cayman RS", "brand": "Porsche", "cv": 400, "year": 2025, "price": 200000, "km": 0, "type": "Sport", "image": "/cars/porsche-cayman.jpg" },
+    { "id": 3, "model": "Macan GTS", "brand": "Porsche", "cv": 400, "year": 2025, "price": 200000, "km": 20000, "type": "SUV", "image": "/cars/porsche-macan-gts.jpg" },
+    { "id": 4, "model": "Yaris GR", "brand": "Toyota", "year": 2025, "cv": 280, "price": 50000, "km": 12000, "type": "Sport", "image": "/cars/toyota-yaris-gr.jpg" },
+    { "id": 5, "model": "Corolla GR", "brand": "Toyota", "year": 2025, "cv": 320, "price": 60000, "km": 0, "type": "Sport", "image": "/cars/toyota-corolla-gr.jpeg" },
+    { "id": 6, "model": "Supra GR", "brand": "Toyota", "year": 2024, "cv": 420, "price": 120000, "km": 20000, "type": "Sport", "image": "/cars/toyota-supra-gr.webp" },
+    { "id": 7, "model": "UX 300", "brand": "Lexus", "cv": 199, "year": 2025, "price": 45000, "km": 12000, "type": "SUV", "image": "/cars/lexus-ux-300.webp" },
+    { "id": 8, "model": "NX", "brand": "Lexus", "cv": 312, "year": 2025, "price": 70000, "km": 0, "type": "SUV", "image": "/cars/lexus-nx.avif" },
+    { "id": 9, "model": "LFA", "brand": "Lexus", "cv": 500, "year": 2010, "price": 750000, "km": 14000, "type": "Supercar", "image": "/cars/lexus-lfa.jpg" },
+    { "id": 10, "model": "A45 AMG", "brand": "Mercedes", "cv": 420, "year": 2024, "price": 70000, "km": 23000, "type": "Sport", "image": "/cars/mercedes-a45-amg.webp" },
+    { "id": 11, "model": "AMG GT", "brand": "Mercedes", "cv": 625, "year": 2023, "price": 220000, "km": 5000, "type": "Supercar", "image": "/cars/mercedes-amg-gt.webp" },
+    { "id": 12, "model": "GLS Coupe AMG", "brand": "Mercedes", "cv": 530, "year": 2025, "price": 220000, "km": 0, "type": "SUV", "image": "/cars/mercedes-gls-amg.jpg" },
+    { "id": 13, "model": "Formentor VZ5", "brand": "Cupra", "cv": 390, "year": 2023, "price": 60000, "km": 33000, "type": "SUV", "image": "/cars/cupra-formentor-vz5.jpg" },
+    { "id": 14, "model": "Leon VZ", "brand": "Cupra", "cv": 310, "year": 2025, "price": 50000, "km": 0, "type": "Sport", "image": "/cars/cupra-leon-vz.jpg" },
+    { "id": 15, "model": "M2 CSA", "brand": "BMW", "cv": 470, "year": 2024, "price": 120000, "km": 7000, "type": "Sport", "image": "/cars/bmw-m2.jpg" },
+    { "id": 16, "model": "M3", "brand": "BMW", "cv": 520, "year": 2023, "price": 90000, "km": 40000, "type": "Sport", "image": "/cars/bmw-m3.jpg" },
+    { "id": 17, "model": "M4", "brand": "BMW", "cv": 500, "year": 2025, "price": 130000, "km": 5600, "type": "Sport", "image": "/cars/bmw-m4.jpg" },
+    { "id": 18, "model": "M3 Touring", "brand": "BMW", "cv": 550, "year": 2025, "price": 150000, "km": 0, "type": "Sport", "image": "/cars/bmw-m3-touring.webp" }
+  ],
+  "dealers": [
+    { "id": 1, "brand": "Porsche", "address": "Calle Meridional 12, Sant Cugat del Valles, 08232", "phone": "+34 93 123 45 67", "hours": "Lun-Sáb 9:00-19:00" },
+    { "id": 2, "brand": "Toyota", "address": "Avenida Abad Merce 133, Terrassa, 08224", "phone": "+34 93 234 56 78", "hours": "Lun-Sáb 9:00-19:00" },
+    { "id": 3, "brand": "Lexus", "address": "Avenida Abad Merce 130, Terrassa, 08224", "phone": "+34 93 345 67 89", "hours": "Lun-Sáb 9:00-19:00" },
+    { "id": 4, "brand": "Mercedes", "address": "Avenida del Valles 232, Terrassa, 08225", "phone": "+34 93 456 78 90", "hours": "Lun-Sáb 9:00-19:00" },
+    { "id": 5, "brand": "Cupra", "address": "Avenida de la concordia 142, Sabadell, 08331", "phone": "+34 93 567 89 01", "hours": "Lun-Sáb 9:00-19:00" },
+    { "id": 6, "brand": "BMW", "address": "Avenida del Valles 167, Sant Cugat del Valles, 08225", "phone": "+34 93 678 90 12", "hours": "Lun-Sáb 9:00-19:00" },
+    { "id": 7, "brand": "Exotic Cars", "address": "Avenida Felipe VI, Sant Cugat del Valles, 08235", "phone": "+34 93 789 01 23", "hours": "Lun-Vie 10:00-18:00" }
+  ]
+}
